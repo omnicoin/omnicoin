@@ -2,7 +2,7 @@
  * Qt4 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The Bitcoin Developers 2011-2013
+ * The Omnicoin Developers 2011-2013
  */
 #include "walletstack.h"
 #include "walletview.h"
@@ -29,7 +29,7 @@ bool WalletStack::addWallet(const QString& name, WalletModel *walletModel)
         return false;
 
     WalletView *walletView = new WalletView(this, gui);
-    walletView->setBitcoinGUI(gui);
+    walletView->setOmnicoinGUI(gui);
     walletView->setClientModel(clientModel);
     walletView->setWalletModel(walletModel);
     walletView->showOutOfSyncWarning(bOutOfSync);

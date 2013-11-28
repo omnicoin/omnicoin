@@ -1,27 +1,27 @@
-#ifndef BITCOINUNITS_H
-#define BITCOINUNITS_H
+#ifndef UNITS_H
+#define UNITS_H
 
 #include <QString>
 #include <QAbstractListModel>
 
-/** Bitcoin unit definitions. Encapsulates parsing and formatting
+/** Omnicoin unit definitions. Encapsulates parsing and formatting
    and serves as list model for drop-down selection boxes.
 */
-class BitcoinUnits: public QAbstractListModel
+class OmnicoinUnits: public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit BitcoinUnits(QObject *parent);
+    explicit OmnicoinUnits(QObject *parent);
 
-    /** Bitcoin units.
+    /** Omnicoin units.
       @note Source: https://en.bitcoin.it/wiki/Units . Please add only sensible ones
      */
     enum Unit
     {
-        BTC,
-        mBTC,
-        uBTC
+        OMC,
+        mOMC,
+        uOMC
     };
 
     //! @name Static API
@@ -62,8 +62,8 @@ public:
     ///@}
 
 private:
-    QList<BitcoinUnits::Unit> unitlist;
+    QList<OmnicoinUnits::Unit> unitlist;
 };
-typedef BitcoinUnits::Unit BitcoinUnit;
+typedef OmnicoinUnits::Unit OmnicoinUnit;
 
-#endif // BITCOINUNITS_H
+#endif // UNITS_H

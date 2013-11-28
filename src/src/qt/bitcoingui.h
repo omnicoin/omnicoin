@@ -1,5 +1,5 @@
-#ifndef BITCOINGUI_H
-#define BITCOINGUI_H
+#ifndef GUI_H
+#define GUI_H
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
@@ -33,18 +33,18 @@ class QAction;
 QT_END_NAMESPACE
 
 /**
-  Bitcoin GUI main class. This class represents the main window of the Bitcoin UI. It communicates with both the client and
+  Omnicoin GUI main class. This class represents the main window of the Omnicoin UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
-class BitcoinGUI : public QMainWindow
+class OmnicoinGUI : public QMainWindow
 {
     Q_OBJECT
 
 public:
     static const QString DEFAULT_WALLET;
 
-    explicit BitcoinGUI(QWidget *parent = 0);
-    ~BitcoinGUI();
+    explicit OmnicoinGUI(QWidget *parent = 0);
+    ~OmnicoinGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
@@ -195,4 +195,4 @@ private slots:
     void detectShutdown();
 };
 
-#endif // BITCOINGUI_H
+#endif // GUI_H

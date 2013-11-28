@@ -2,14 +2,14 @@
  * Qt4 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The Bitcoin Developers 2011-2013
+ * The Omnicoin Developers 2011-2013
  */
 #ifndef WALLETVIEW_H
 #define WALLETVIEW_H
 
 #include <QStackedWidget>
 
-class BitcoinGUI;
+class OmnicoinGUI;
 class ClientModel;
 class WalletModel;
 class TransactionView;
@@ -35,10 +35,10 @@ class WalletView : public QStackedWidget
     Q_OBJECT
 
 public:
-    explicit WalletView(QWidget *parent, BitcoinGUI *_gui);
+    explicit WalletView(QWidget *parent, OmnicoinGUI *_gui);
     ~WalletView();
 
-    void setBitcoinGUI(BitcoinGUI *gui);
+    void setOmnicoinGUI(OmnicoinGUI *gui);
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
@@ -54,7 +54,7 @@ public:
     void showOutOfSyncWarning(bool fShow);
 
 private:
-    BitcoinGUI *gui;
+    OmnicoinGUI *gui;
     ClientModel *clientModel;
     WalletModel *walletModel;
 

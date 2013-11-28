@@ -2,90 +2,90 @@
 
 #include <QStringList>
 
-BitcoinUnits::BitcoinUnits(QObject *parent):
+OmnicoinUnits::OmnicoinUnits(QObject *parent):
         QAbstractListModel(parent),
         unitlist(availableUnits())
 {
 }
 
-QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
+QList<OmnicoinUnits::Unit> OmnicoinUnits::availableUnits()
 {
-    QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(BTC);
-    unitlist.append(mBTC);
-    unitlist.append(uBTC);
+    QList<OmnicoinUnits::Unit> unitlist;
+    unitlist.append(OMC);
+    unitlist.append(mOMC);
+    unitlist.append(uOMC);
     return unitlist;
 }
 
-bool BitcoinUnits::valid(int unit)
+bool OmnicoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case BTC:
-    case mBTC:
-    case uBTC:
+    case OMC:
+    case mOMC:
+    case uOMC:
         return true;
     default:
         return false;
     }
 }
 
-QString BitcoinUnits::name(int unit)
+QString OmnicoinUnits::name(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("LTC");
-    case mBTC: return QString("mLTC");
-    case uBTC: return QString::fromUtf8("μLTC");
+    case OMC: return QString("LTC");
+    case mOMC: return QString("mLTC");
+    case uOMC: return QString::fromUtf8("μLTC");
     default: return QString("???");
     }
 }
 
-QString BitcoinUnits::description(int unit)
+QString OmnicoinUnits::description(int unit)
 {
     switch(unit)
     {
-    case BTC: return QString("Litecoins");
-    case mBTC: return QString("Milli-Litecoins (1 / 1,000)");
-    case uBTC: return QString("Micro-Litecoins (1 / 1,000,000)");
+    case OMC: return QString("Omnicoins");
+    case mOMC: return QString("Milli-Omnicoins (1 / 1,000)");
+    case uOMC: return QString("Micro-Omnicoins (1 / 1,000,000)");
     default: return QString("???");
     }
 }
 
-qint64 BitcoinUnits::factor(int unit)
+qint64 OmnicoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case BTC:  return 100000000;
-    case mBTC: return 100000;
-    case uBTC: return 100;
+    case OMC:  return 100000000;
+    case mOMC: return 100000;
+    case uOMC: return 100;
     default:   return 100000000;
     }
 }
 
-int BitcoinUnits::amountDigits(int unit)
+int OmnicoinUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case BTC: return 8; // 21,000,000 (# digits, without commas)
-    case mBTC: return 11; // 21,000,000,000
-    case uBTC: return 14; // 21,000,000,000,000
+    case OMC: return 8; // 21,000,000 (# digits, without commas)
+    case mOMC: return 11; // 21,000,000,000
+    case uOMC: return 14; // 21,000,000,000,000
     default: return 0;
     }
 }
 
-int BitcoinUnits::decimals(int unit)
+int OmnicoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case BTC: return 8;
-    case mBTC: return 5;
-    case uBTC: return 2;
+    case OMC: return 8;
+    case mOMC: return 5;
+    case uOMC: return 2;
     default: return 0;
     }
 }
 
-QString BitcoinUnits::format(int unit, qint64 n, bool fPlus)
+QString OmnicoinUnits::format(int unit, qint64 n, bool fPlus)
 {
     // Note: not using straight sprintf here because we do NOT want
     // localized number formatting.
@@ -112,12 +112,12 @@ QString BitcoinUnits::format(int unit, qint64 n, bool fPlus)
     return quotient_str + QString(".") + remainder_str;
 }
 
-QString BitcoinUnits::formatWithUnit(int unit, qint64 amount, bool plussign)
+QString OmnicoinUnits::formatWithUnit(int unit, qint64 amount, bool plussign)
 {
     return format(unit, amount, plussign) + QString(" ") + name(unit);
 }
 
-bool BitcoinUnits::parse(int unit, const QString &value, qint64 *val_out)
+bool OmnicoinUnits::parse(int unit, const QString &value, qint64 *val_out)
 {
     if(!valid(unit) || value.isEmpty())
         return false; // Refuse to parse invalid unit or empty string
@@ -154,13 +154,13 @@ bool BitcoinUnits::parse(int unit, const QString &value, qint64 *val_out)
     return ok;
 }
 
-int BitcoinUnits::rowCount(const QModelIndex &parent) const
+int OmnicoinUnits::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return unitlist.size();
 }
 
-QVariant BitcoinUnits::data(const QModelIndex &index, int role) const
+QVariant OmnicoinUnits::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     if(row >= 0 && row < unitlist.size())

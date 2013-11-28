@@ -7,7 +7,7 @@
 #  spendfrom.py  # Lists available funds
 #  spendfrom.py --from=ADDRESS --to=ADDRESS --amount=11.00
 #
-# Assumes it will talk to a bitcoind or Bitcoin-Qt running
+# Assumes it will talk to a bitcoind or Omnicoin-Qt running
 # on localhost.
 #
 # Depends on jsonrpc
@@ -26,7 +26,7 @@ from jsonrpc import ServiceProxy, json
 BASE_FEE=Decimal("0.001")
 
 def check_json_precision():
-    """Make sure json library being used does not lose precision converting BTC values"""
+    """Make sure json library being used does not lose precision converting OMC values"""
     n = Decimal("20000000.00000003")
     satoshis = int(json.loads(json.dumps(float(n)))*1.0e8)
     if satoshis != 2000000000000003:
@@ -35,9 +35,9 @@ def check_json_precision():
 def determine_db_dir():
     """Return the default location of the bitcoin data directory"""
     if platform.system() == "Darwin":
-        return os.path.expanduser("~/Library/Application Support/Bitcoin/")
+        return os.path.expanduser("~/Library/Application Support/Omnicoin/")
     elif platform.system() == "Windows":
-        return os.path.join(os.environ['APPDATA'], "Bitcoin")
+        return os.path.join(os.environ['APPDATA'], "Omnicoin")
     return os.path.expanduser("~/.bitcoin")
 
 def read_bitcoin_config(dbdir):
@@ -152,7 +152,7 @@ def create_tx(bitcoind, fromaddresses, toaddress, amount, fee):
         total_available += all_coins[addr]["total"]
 
     if total_available < needed:
-        sys.stderr.write("Error, only %f BTC available, need %f\n"%(total_available, needed));
+        sys.stderr.write("Error, only %f OMC available, need %f\n"%(total_available, needed));
         sys.exit(1)
 
     #

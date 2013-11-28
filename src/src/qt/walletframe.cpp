@@ -2,7 +2,7 @@
  * Qt4 bitcoin GUI.
  *
  * W.J. van der Laan 2011-2012
- * The Bitcoin Developers 2011-2013
+ * The Omnicoin Developers 2011-2013
  */
 #include "walletframe.h"
 #include "bitcoingui.h"
@@ -11,7 +11,7 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 
-WalletFrame::WalletFrame(BitcoinGUI *_gui) :
+WalletFrame::WalletFrame(OmnicoinGUI *_gui) :
     QFrame(_gui),
     gui(_gui),
     clientModel(0)
@@ -20,7 +20,7 @@ WalletFrame::WalletFrame(BitcoinGUI *_gui) :
     QHBoxLayout *walletFrameLayout = new QHBoxLayout(this);
     setContentsMargins(0,0,0,0);
     walletStack = new WalletStack(this);
-    walletStack->setBitcoinGUI(gui);
+    walletStack->setOmnicoinGUI(gui);
     walletFrameLayout->setContentsMargins(0,0,0,0);
     walletFrameLayout->addWidget(walletStack);
 }

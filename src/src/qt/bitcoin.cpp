@@ -29,8 +29,8 @@
 #include "macdockiconhandler.h"
 #endif
 
-#if defined(BITCOIN_NEED_QT_PLUGINS) && !defined(_BITCOIN_QT_PLUGINS_INCLUDED)
-#define _BITCOIN_QT_PLUGINS_INCLUDED
+#if defined(_NEED_QT_PLUGINS) && !defined(__QT_PLUGINS_INCLUDED)
+#define __QT_PLUGINS_INCLUDED
 #define __INSURE__
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(qcncodecs)
@@ -44,7 +44,7 @@ Q_IMPORT_PLUGIN(qtaccessiblewidgets)
 Q_DECLARE_METATYPE(bool*)
 
 // Need a global reference for the notifications to find the GUI
-static BitcoinGUI *guiref;
+static OmnicoinGUI *guiref;
 static SplashScreen *splashref;
 
 static bool ThreadSafeMessageBox(const std::string& message, const std::string& caption, unsigned int style)
@@ -110,11 +110,11 @@ static std::string Translate(const char* psz)
 static void handleRunawayException(std::exception *e)
 {
     PrintExceptionContinue(e, "Runaway exception");
-    QMessageBox::critical(0, "Runaway exception", BitcoinGUI::tr("A fatal error occurred. Litecoin can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
+    QMessageBox::critical(0, "Runaway exception", OmnicoinGUI::tr("A fatal error occurred. Omnicoin can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
     exit(1);
 }
 
-#ifndef BITCOIN_QT_TEST
+#ifndef _QT_TEST
 int main(int argc, char *argv[])
 {
     // Command-line options take precedence:
@@ -146,7 +146,7 @@ int main(int argc, char *argv[])
     {
         // This message can not be translated, as translation is not initialized yet
         // (which not yet possible because lang=XX can be overridden in bitcoin.conf in the data directory)
-        QMessageBox::critical(0, "Litecoin",
+        QMessageBox::critical(0, "Omnicoin",
                               QString("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return 1;
     }
@@ -154,12 +154,12 @@ int main(int argc, char *argv[])
 
     // Application identification (must be set before OptionsModel is initialized,
     // as it is used to locate QSettings)
-    QApplication::setOrganizationName("Litecoin");
-    QApplication::setOrganizationDomain("litecoin.org");
+    QApplication::setOrganizationName("Omnicoin");
+    QApplication::setOrganizationDomain("omnicoin.org");
     if(GetBoolArg("-testnet")) // Separate UI settings for testnet
-        QApplication::setApplicationName("Litecoin-Qt-testnet");
+        QApplication::setApplicationName("Omnicoin-Qt-testnet");
     else
-        QApplication::setApplicationName("Litecoin-Qt");
+        QApplication::setApplicationName("Omnicoin-Qt");
 
     // ... then GUI settings:
     OptionsModel optionsModel;
@@ -235,7 +235,7 @@ int main(int argc, char *argv[])
 
         boost::thread_group threadGroup;
 
-        BitcoinGUI window;
+        OmnicoinGUI window;
         guiref = &window;
 
         QTimer* pollShutdownTimer = new QTimer(guiref);
@@ -282,7 +282,7 @@ int main(int argc, char *argv[])
                 window.removeAllWallets();
                 guiref = 0;
             }
-            // Shutdown the core and its threads, but don't exit Bitcoin-Qt here
+            // Shutdown the core and its threads, but don't exit Omnicoin-Qt here
             threadGroup.interrupt_all();
             threadGroup.join_all();
             Shutdown();
@@ -301,4 +301,4 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-#endif // BITCOIN_QT_TEST
+#endif // _QT_TEST
